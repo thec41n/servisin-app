@@ -29,9 +29,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return '<h1>Ini Halaman Dashboard Admin</h1>';
-    })->name('dashboard');
+    Route::resource('services', \App\Http\Controllers\Admin\ServiceController::class);
+
 });
 
 require __DIR__ . '/auth.php';

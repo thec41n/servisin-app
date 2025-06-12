@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Service extends Model
 {
@@ -16,4 +18,11 @@ class Service extends Model
         'image',
         'status',
     ];
+
+    protected function shortDescription(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => Str::limit($this->description, 50, '...'),
+        );
+    }
 }
