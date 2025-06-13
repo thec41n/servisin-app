@@ -18,6 +18,7 @@ class Order extends Model
         'item_detail',
         'image',
         'status',
+        'tracking_code',
     ];
 
     public function service(): BelongsTo

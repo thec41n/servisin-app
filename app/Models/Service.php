@@ -31,11 +31,10 @@ class Service extends Model
     {
         return Attribute::make(
             get: function () {
-                if ($this->image && Storage::disk('public')->exists($this->image)) {
+                if ($this->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->image)) {
                     return asset('storage/' . $this->image);
-                } else {
-                    return 'https://placehold.co/800x600';
                 }
+                return null;
             },
         );
     }

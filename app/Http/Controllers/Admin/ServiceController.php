@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
@@ -34,18 +35,17 @@ class ServiceController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'status' => 'required|boolean',
         ]);
 
-        $imageName = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('uploads/services'), $imageName);
+        $imagePath = $request->file('image')->store('services', 'public');
 
         Service::create([
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
-            'image' => $imageName,
+            'image' => $imagePath,
             'status' => $request->status,
         ]);
 
@@ -77,21 +77,18 @@ class ServiceController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // nullable artinya gambar boleh kosong
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'status' => 'required|boolean',
         ]);
 
         $dataToUpdate = $request->only(['name', 'description', 'price', 'status']);
 
         if ($request->hasFile('image')) {
-            if ($service->image && file_exists(public_path('uploads/services/' . $service->image))) {
-                unlink(public_path('uploads/services/' . $service->image));
+            if ($service->image) {
+                Storage::disk('public')->delete($service->image);
             }
-
-            $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('uploads/services'), $imageName);
-
-            $dataToUpdate['image'] = $imageName;
+            $imagePath = $request->file('image')->store('services', 'public');
+            $dataToUpdate['image'] = $imagePath;
         }
 
         $service->update($dataToUpdate);
@@ -104,8 +101,8 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        if ($service->image && file_exists(public_path('uploads/services/' . $service->image))) {
-            unlink(public_path('uploads/services/' . $service->image));
+        if ($service->image) {
+            Storage::disk('public')->delete($service->image);
         }
 
         $service->delete();

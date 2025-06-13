@@ -28,7 +28,8 @@
                             <option value="proses" {{ $order->status == 'proses' ? 'selected' : '' }}>Proses</option>
                             <option value="selesai" {{ $order->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
                             <option value="dikirim" {{ $order->status == 'dikirim' ? 'selected' : '' }}>Dikirim</option>
-                            <option value="dibatalkan" {{ $order->status == 'dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
+                            <option value="dibatalkan" {{ $order->status == 'dibatalkan' ? 'selected' : '' }}>Dibatalkan
+                            </option>
                         </select>
                     </div>
                     <div class="col-md-3 mt-2">
@@ -36,7 +37,7 @@
                     </div>
                 </div>
             </form>
-            
+
             <div class="row">
                 <div class="col-md-6 mt-3">
                     <h5>Info Pelanggan</h5>
@@ -62,9 +63,9 @@
                     <hr>
                     <h5>Gambar Barang</h5>
 
-                    @if ($order->image && file_exists(public_path('uploads/orders/' . $order->image)))
-                        <a href="{{ asset('uploads/orders/' . $order->image) }}" target="_blank">
-                            <img src="{{ asset('uploads/orders/' . $order->image) }}" alt="Gambar Barang"
+                    @if ($order->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($order->image))
+                        <a href="{{ asset('storage/' . $order->image) }}" target="_blank">
+                            <img src="{{ asset('storage/' . $order->image) }}" alt="Gambar Barang"
                                 class="img-fluid rounded" style="max-height: 400px; cursor: pointer;">
                         </a>
                     @else

@@ -36,9 +36,9 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>
                                     <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal"
-                                        data-src="{{ asset('uploads/services/' . $service->image) }}">
-                                        <img src="{{ asset('uploads/services/' . $service->image) }}"
-                                            alt="{{ $service->name }}" width="100" class="img-thumbnail">
+                                        data-src="{{ $service->image_url }}">
+                                        <img src="{{ $service->image_url }}" alt="{{ $service->name }}" width="100"
+                                            class="img-thumbnail">
                                     </a>
                                 </td>
                                 <td>{{ $service->name }}</td>
@@ -106,7 +106,7 @@
                             <label for="image" class="form-label">Gambar Layanan</label>
                             <input type="file" id="image" name="image" class="form-control">
                             <small class="form-text text-muted">Kosongkan jika tidak ingin mengubah gambar.</small>
-                            
+
                             <div id="image-preview-wrapper" class="mt-2 d-none">
                                 <p class="mb-1 small">Gambar saat ini:</p>
 
@@ -173,7 +173,23 @@
                     ['font', ['bold', 'italic', 'underline', 'clear']],
                     ['para', ['ul', 'ol']],
                     ['view', ['fullscreen', 'codeview']]
-                ]
+                ],
+                callbacks: {
+                    onPaste: function(e) {
+                        var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData)
+                            .getData('Text');
+                        e.preventDefault();
+                        document.execCommand('insertText', false, bufferText);
+                    }
+                }
+            });
+
+            $('#service-form').on('submit', function() {
+                if ($('#description').summernote('isEmpty')) {
+                    $('#description').val('');
+                } else {
+                    $('#description').val($('#description').summernote('code'));
+                }
             });
 
             $('#serviceModal').on('show.bs.modal', function(event) {
@@ -199,13 +215,11 @@
                             modal.find('#status').val(data.status);
                             modal.find('#description').summernote('code', data.description);
 
-                            if (data.image) {
-                                let imageUrl = "{{ asset('uploads/services') }}/" + data.image;
-                                currentImage.attr('src', imageUrl);
-                                imagePreviewWrapper.removeClass('d-none'); // Tampilkan preview
+                            if (data.image_url) {
+                                currentImage.attr('src', data.image_url);
+                                imagePreviewWrapper.removeClass('d-none');
                             } else {
-                                imagePreviewWrapper.addClass(
-                                    'd-none');
+                                imagePreviewWrapper.addClass('d-none');
                             }
                         });
 
