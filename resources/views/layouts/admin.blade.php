@@ -34,10 +34,24 @@
                 text: '{{ session('success') }}',
                 icon: 'success',
                 confirmButtonColor: '#8e1616',
-                confirmButtonText: 'Oke'
+                confirmButtonText: 'Oke, Mantap!'
             });
         </script>
     @endif
+
+    @if (session('login_success'))
+        <script>
+            Swal.fire({
+                title: 'Selamat Datang!',
+                text: '{{ session('login_success') }}',
+                icon: 'success',
+                timer: 2500,
+                showConfirmButton: false,
+                timerProgressBar: true
+            });
+        </script>
+    @endif
+
     @stack('scripts')
 </body>
 
