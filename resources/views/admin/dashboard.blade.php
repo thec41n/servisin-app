@@ -74,6 +74,13 @@
 
     <section class="card border-0 shadow-sm mt-4">
         <div class="card-body p-4">
+            <h2 class="h5 mb-3">Pesanan 7 Hari Terakhir</h2>
+            <canvas id="dailyOrdersChart" style="max-height: 300px;"></canvas>
+        </div>
+    </section>
+
+    <section class="card border-0 shadow-sm mt-4">
+        <div class="card-body p-4">
             <h2 class="h5 mb-3">Aktivitas Terbaru (5 Pesanan Terakhir)</h2>
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
@@ -111,3 +118,35 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+        const ctx = document.getElementById('dailyOrdersChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {!! json_encode($chartLabels) !!},
+                datasets: [{
+                    label: '# Jumlah Pesanan',
+                    data: {!! json_encode($chartData) !!},
+                    backgroundColor: 'rgba(142, 22, 22, 0.5)',
+                    borderColor: 'rgba(142, 22, 22, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+@endpush
