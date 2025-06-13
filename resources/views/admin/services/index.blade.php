@@ -92,34 +92,58 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama Layanan</label>
-                            <input type="text" id="name" name="name" class="form-control" required />
+                            <input type="text" id="name" name="name"
+                                class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
+                                required />
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
+
                         <div class="mb-3">
                             <label for="description" class="form-label">Deskripsi</label>
-                            <textarea id="description" name="description" rows="4" class="form-control"></textarea>
+                            <textarea id="description" name="description" rows="4"
+                                class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
+                            @error('description')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
                         </div>
+
                         <div class="mb-3">
                             <label for="price" class="form-label">Harga</label>
-                            <input type="number" id="price" name="price" class="form-control" required />
+                            <input type="text" id="price" name="price"
+                                class="form-control @error('price') is-invalid @enderror" value="{{ old('price') }}"
+                                onkeyup="formatRupiah(this)" required data-raw-price="" /> @error('price')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
+
                         <div class="mb-3">
                             <label for="image" class="form-label">Gambar Layanan</label>
-                            <input type="file" id="image" name="image" class="form-control">
+                            <input type="file" id="image" name="image"
+                                class="form-control @error('image') is-invalid @enderror">
+                            @error('image')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                             <small class="form-text text-muted">Kosongkan jika tidak ingin mengubah gambar.</small>
 
                             <div id="image-preview-wrapper" class="mt-2 d-none">
                                 <p class="mb-1 small">Gambar saat ini:</p>
-
                                 <img src="" id="current-image" class="img-thumbnail" width="150"
                                     alt="Gambar saat ini">
                             </div>
                         </div>
+
                         <div class="mb-3">
                             <label for="status" class="form-label">Status</label>
-                            <select id="status" name="status" class="form-select">
-                                <option value="1">Aktif</option>
-                                <option value="0">Tidak Aktif</option>
+                            <select id="status" name="status"
+                                class="form-select @error('status') is-invalid @enderror">
+                                <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Aktif</option>
+                                <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Tidak Aktif</option>
                             </select>
+                            @error('status')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -147,6 +171,9 @@
             </div>
         </div>
     </div>
+    <div class="mt-3">
+        {{ $services->links() }}
+    </div>
 @endsection
 @push('scripts')
     <script>
@@ -164,6 +191,21 @@
 
 @push('scripts')
     <script>
+        function formatRupiah(input) {
+            let value = input.value;
+            value = value.replace(/\D/g, '');
+
+            input.setAttribute('data-raw-price', value);
+
+            if (value === "") {
+                input.value = "";
+                return;
+            }
+
+            let formattedValue = new Intl.NumberFormat('id-ID').format(value);
+            input.value = formattedValue;
+        }
+
         $(document).ready(function() {
             $('#description').summernote({
                 placeholder: 'Tulis deskripsi layanan di sini...',
@@ -171,7 +213,7 @@
                 height: 120,
                 toolbar: [
                     ['font', ['bold', 'italic', 'underline', 'clear']],
-                    ['para', ['ul', 'ol']],
+                    ['para', ['ul', 'ol', 'paragraph']],
                     ['view', ['fullscreen', 'codeview']]
                 ],
                 callbacks: {
@@ -190,6 +232,12 @@
                 } else {
                     $('#description').val($('#description').summernote('code'));
                 }
+
+                let priceInput = $('#price');
+                let rawPrice = priceInput.attr('data-raw-price');
+                if (rawPrice) {
+                    priceInput.val(rawPrice);
+                }
             });
 
             $('#serviceModal').on('show.bs.modal', function(event) {
@@ -199,10 +247,12 @@
 
                 var imagePreviewWrapper = $('#image-preview-wrapper');
                 var currentImage = $('#current-image');
+                var priceInput = modal.find('#price');
 
                 if (serviceId) {
                     modal.find('.modal-title').text('Edit Layanan');
                     $('#service-form').attr('action', button.data('update-url'));
+
                     if (!$('#service-form').find('input[name="_method"]').length) {
                         $('#service-form').prepend('<input type="hidden" name="_method" value="PUT">');
                     }
@@ -214,6 +264,8 @@
                             modal.find('#price').val(data.price);
                             modal.find('#status').val(data.status);
                             modal.find('#description').summernote('code', data.description);
+                            priceInput.val(data.price);
+                            formatRupiah(priceInput[0]);
 
                             if (data.image_url) {
                                 currentImage.attr('src', data.image_url);
@@ -222,17 +274,32 @@
                                 imagePreviewWrapper.addClass('d-none');
                             }
                         });
-
                 } else {
                     modal.find('.modal-title').text('Tambah Layanan Baru');
                     $('#service-form').attr('action', "{{ route('admin.services.store') }}");
                     $('#service-form')[0].reset();
                     $('#description').summernote('code', '');
                     $('#service-form').find('input[name="_method"]').remove();
-
                     imagePreviewWrapper.addClass('d-none');
+                    priceInput.val('');
+                    priceInput.removeAttr('data-raw-price');
                 }
             });
+
+            $('#imageModal').on('show.bs.modal', function(event) {
+                var triggerElement = $(event.relatedTarget);
+                var imageSrc = triggerElement.data('src');
+                $('#modalImage').attr('src', imageSrc);
+            });
+
+            @if ($errors->any())
+                var serviceModal = new bootstrap.Modal(document.getElementById('serviceModal'), {});
+                serviceModal.show();
+                let priceInputWithError = $('#price');
+                if (priceInputWithError.val() !== '') {
+                    formatRupiah(priceInputWithError[0]);
+                }
+            @endif
         });
     </script>
 @endpush

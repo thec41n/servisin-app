@@ -14,7 +14,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::latest()->get();
+        $services = Service::latest()->paginate(10);
         return view('admin.services.index', compact('services'));
     }
 
@@ -31,13 +31,25 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'name.required' => 'Nama layanan wajib diisi!',
+            'description.required' => 'Deskripsi tidak boleh kosong.',
+            'price.required' => 'Harga harus diisi.',
+            'price.integer' => 'Harga harus dalam bentuk angka.',
+            'image.required' => 'Gambar layanan wajib diisi',
+            'image.image' => 'File yang diupload harus berupa gambar.',
+            'image.mimes' => 'Format gambarnya cuma boleh jpeg, png, jpg, atau gif.',
+            'image.max' => 'Ukuran gambar terlalu besar! Maksimal 5MB.',
+            'status.required' => 'Statusnya dipilih dulu, aktif atau tidak aktif.',
+        ];
+
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|integer',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'status' => 'required|boolean',
-        ]);
+        ], $messages);
 
         $imagePath = $request->file('image')->store('services', 'public');
 
@@ -73,13 +85,25 @@ class ServiceController extends Controller
      */
     public function update(Request $request, Service $service)
     {
+        $messages = [
+            'name.required' => 'Nama layanan wajib diisi!',
+            'description.required' => 'Deskripsi tidak boleh kosong.',
+            'price.required' => 'Harga harus diisi.',
+            'price.integer' => 'Harga harus dalam bentuk angka.',
+            'image.required' => 'Gambar layanan wajib diisi',
+            'image.image' => 'File yang diupload harus berupa gambar.',
+            'image.mimes' => 'Format gambarnya cuma boleh jpeg, png, jpg, atau gif.',
+            'image.max' => 'Ukuran gambar terlalu besar! Maksimal 5MB.',
+            'status.required' => 'Statusnya dipilih dulu, aktif atau tidak aktif.',
+        ];
+
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|integer',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'status' => 'required|boolean',
-        ]);
+        ], $messages);
 
         $dataToUpdate = $request->only(['name', 'description', 'price', 'status']);
 

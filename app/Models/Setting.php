@@ -20,6 +20,10 @@ class Setting extends Model
         'social_links',
     ];
 
+    protected $casts = [
+        'social_links' => 'array',
+    ];
+
     protected function logoUrl(): Attribute
     {
         return Attribute::make(

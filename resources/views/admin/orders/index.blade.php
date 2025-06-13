@@ -30,6 +30,11 @@
                         </option>
                     </select>
                 </div>
+                <div class="flex-grow-1">
+                    <label for="search_query" class="form-label">Cari Pesanan</label>
+                    <input type="text" name="search" id="search_query" class="form-control"
+                        placeholder="Kode, Nama, atau No. Telepon" value="{{ request('search') }}">
+                </div>
 
                 <div>
                     <button type="submit" class="btn btn-primary">Filter</button>

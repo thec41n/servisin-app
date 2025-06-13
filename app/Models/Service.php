@@ -20,6 +20,8 @@ class Service extends Model
         'status',
     ];
 
+    protected $appends = ['image_url'];
+
     protected function shortDescription(): Attribute
     {
         return Attribute::make(

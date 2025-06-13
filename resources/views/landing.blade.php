@@ -48,10 +48,6 @@
 
             </div>
 
-            <div class="mt-5 d-flex justify-content-center">
-                {{ $services->links() }}
-            </div>
-
         </div>
     </section>
 @endsection

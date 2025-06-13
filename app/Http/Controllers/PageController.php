@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Service;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
     public function home()
     {
-        $services = Service::where('status', true)->latest()->paginate(9);
+        $services = Service::where('status', true)->latest()->take(3)->get();
 
         return view('landing', compact('services'));
     }
@@ -60,5 +61,12 @@ class PageController extends Controller
         }
 
         return view('services.index', compact('services'));
+    }
+
+    public function showContactPage()
+    {
+        $appSetting = Setting::firstOrCreate([]);
+
+        return view('contact.contact', compact('appSetting'));
     }
 }

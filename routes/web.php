@@ -28,6 +28,7 @@ Route::get('/orders/{order}/receipt', [PublicOrderController::class, 'receipt'])
 Route::get('/track', [PageController::class, 'showTrackPage'])->name('track.show');
 Route::post('/track', [PageController::class, 'trackOrder'])->name('track.post');
 Route::get('/services', [PageController::class, 'showAllServices'])->name('services.index_public');
+Route::get('/kontak-kami', [PageController::class, 'showContactPage'])->name('contact.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

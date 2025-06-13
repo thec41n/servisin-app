@@ -39,6 +39,9 @@
                             <a class="nav-link {{ request()->routeIs('track.show') ? 'active' : '' }}"
                                 href="{{ route('track.show') }}">Lacak Status</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('contact.show') }}">Kontak Kami</a>
+                        </li>
                         <li class="nav-item mt-2 mt-lg-0 ms-lg-2">
                             <a href="{{ route('login') }}" class="btn btn-primary">Login Admin</a>
                         </li>
