@@ -36,6 +36,13 @@
         </li>
     </ul>
     <div class="sidebar-footer">
-        <a href="#"><i class="fas fa-sign-out-alt icon"></i> Logout</a>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+
+            <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
+                <i class="fas fa-sign-out-alt icon"></i>
+                <span>Logout</span>
+            </a>
+        </form>
     </div>
 </aside>
