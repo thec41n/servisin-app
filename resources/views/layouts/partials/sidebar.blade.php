@@ -1,22 +1,38 @@
 <aside class="sidebar">
     <div class="sidebar-header">
-        <a href="#" class="logo">Servis.in</a>
+        <a href="{{ route('admin.dashboard') }}" class="logo d-flex align-items-center gap-2">
+
+            @if ($appSetting->logo ?? null && \Illuminate\Support\Facades\Storage::disk('public')->exists($appSetting->logo))
+                <img src="{{ asset('storage/' . $appSetting->logo) }}" alt="Logo" style="height: 30px; width: auto;">
+            @endif
+
+            <span>{{ $appSetting->website_name ?? 'Servis.in' }}</span>
+        </a>
+
         <button class="sidebar-close-btn" id="sidebar-close-btn">
             <i class="fas fa-times"></i>
         </button>
     </div>
     <ul class="sidebar-nav">
         <li>
-            <a href="#"><i class="fas fa-tachometer-alt icon"></i> Dashboard</a>
+            <a href="{{ route('admin.dashboard') }}" @class(['active' => request()->routeIs('admin.dashboard')])>
+                <i class="fas fa-tachometer-alt icon"></i> Dashboard
+            </a>
         </li>
         <li>
-            <a href="#" class="active"><i class="fas fa-wrench icon"></i> Manajemen Layanan</a>
+            <a href="{{ route('admin.services.index') }}" @class(['active' => request()->routeIs('admin.services.*')])>
+                <i class="fas fa-wrench icon"></i> Manajemen Layanan
+            </a>
         </li>
         <li>
-            <a href="#"><i class="fas fa-box icon"></i> Manajemen Pesanan</a>
+            <a href="{{ route('admin.orders.index') }}" @class(['active' => request()->routeIs('admin.orders.*')])>
+                <i class="fas fa-box icon"></i> Manajemen Pesanan
+            </a>
         </li>
         <li>
-            <a href="#"><i class="fas fa-cog icon"></i> Pengaturan Website</a>
+            <a href="{{ route('admin.settings.edit') }}" @class(['active' => request()->routeIs('admin.settings.*')])>
+                <i class="fas fa-cog icon"></i>Pengaturan Website
+            </a>
         </li>
     </ul>
     <div class="sidebar-footer">

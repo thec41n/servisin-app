@@ -22,8 +22,7 @@ return new class extends Migration
             $table->text('item_detail');
             $table->string('image')->nullable();
 
-            // Status pesanan
-            $table->enum('status', ['menunggu', 'dicek', 'proses', 'selesai', 'dikirim'])->default('menunggu');
+            $table->enum('status', ['menunggu', 'dicek', 'proses', 'selesai', 'dikirim', 'dibatalkan'])->default('menunggu');
             $table->string('tracking_code')->unique();
 
             $table->timestamps();

@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             SettingsTableSeeder::class,
             ServicesTableSeeder::class,
             AdminUserSeeder::class,
+            OrdersTableSeeder::class,
         ]);
     }
 }

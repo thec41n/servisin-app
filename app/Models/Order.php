@@ -17,6 +17,7 @@ class Order extends Model
         'phone_number',
         'item_detail',
         'image',
+        'status',
     ];
 
     public function service(): BelongsTo
