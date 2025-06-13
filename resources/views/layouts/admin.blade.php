@@ -34,7 +34,7 @@
                 text: '{{ session('success') }}',
                 icon: 'success',
                 confirmButtonColor: '#8e1616',
-                confirmButtonText: 'Oke, Mantap!'
+                confirmButtonText: 'Oke'
             });
         </script>
     @endif
