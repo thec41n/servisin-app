@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
 
-        View::composer('layouts.admin', function ($view) {
+        View::composer(['layouts.admin', 'layouts.app'], function ($view) {
             $view->with('appSetting', Setting::first());
         });
     }

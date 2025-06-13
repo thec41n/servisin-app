@@ -69,13 +69,13 @@
                             <input type="file" name="logo" class="form-control" />
                             <small class="form-text text-muted">Kosongkan jika tidak ingin mengubah logo.</small>
 
-                            @if (($setting->logo ?? null) && \Illuminate\Support\Facades\Storage::disk('public')->exists($setting->logo))
+                            @if ($setting->logo_url)
                                 <div class="mt-2">
                                     <p class="mb-1 small">Logo saat ini:</p>
                                     <a href="#" data-bs-toggle="modal" data-bs-target="#logoModal"
-                                        data-src="{{ asset('storage/' . $setting->logo) }}">
-                                        <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo saat ini"
-                                            class="img-thumbnail mt-2" width="150">
+                                        data-src="{{ $setting->logo_url }}">
+                                        <img src="{{ $setting->logo_url }}" alt="Logo saat ini" class="img-thumbnail"
+                                            width="150">
                                     </a>
                                 </div>
                             @endif

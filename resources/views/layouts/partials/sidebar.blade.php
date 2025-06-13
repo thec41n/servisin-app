@@ -2,8 +2,8 @@
     <div class="sidebar-header">
         <a href="{{ route('admin.dashboard') }}" class="logo d-flex align-items-center gap-2">
 
-            @if ($appSetting->logo ?? null && \Illuminate\Support\Facades\Storage::disk('public')->exists($appSetting->logo))
-                <img src="{{ asset('storage/' . $appSetting->logo) }}" alt="Logo" style="height: 30px; width: auto;">
+            @if ($appSetting->logo_url)
+                <img src="{{ $appSetting->logo_url }}" alt="Logo" style="height: 30px; width: auto;">
             @endif
 
             <span>{{ $appSetting->website_name ?? 'Servis.in' }}</span>
