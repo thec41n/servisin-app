@@ -34,7 +34,7 @@ a {
 }
 
 /* =================================
-   ADMIN LAYOUT (SESUAI FILE ASLI LU)
+   ADMIN LAYOUT
    ================================= */
 .admin-wrapper {
     display: grid;
@@ -46,20 +46,20 @@ a {
     grid-template-columns: 260px 1fr;
 }
 
-/* Sidebar Styling (SESUAI FILE ASLI LU) */
+/* Sidebar Styling */
 .sidebar {
     background-color: var(--black);
     color: var(--warm-white);
     display: flex;
     flex-direction: column;
     padding: 1.5rem;
-    width: 260px; /* Lebar sidebar tetap */
-    transform: translateX(-100%); /* Awalnya sembunyi */
+    width: 260px;
+    transform: translateX(-100%);
     transition: transform 0.4s ease;
     z-index: 1000;
 }
 .admin-wrapper.sidebar-open .sidebar {
-    transform: translateX(0); /* Muncul saat wrapper-nya open */
+    transform: translateX(0);
 }
 
 .sidebar-header {
@@ -77,7 +77,7 @@ a {
 }
 .sidebar-nav {
     list-style: none;
-    padding-left: 0; /* Reset padding bawaan UL */
+    padding-left: 0;
     flex-grow: 1;
 }
 .sidebar-nav a {
@@ -111,12 +111,12 @@ a {
     gap: 1rem;
 }
 
-/* Main Content Styling (SESUAI FILE ASLI LU) */
+/* Main Content Styling */
 .main-content {
     padding: 2rem;
     grid-column: 2 / 3;
     width: 100%;
-    min-width: 0; /* <<< INI DIA JIMATNYA, BRO! */
+    min-width: 0;
 }
 .content-header {
     margin-bottom: 2rem;
@@ -125,9 +125,7 @@ a {
     font-weight: 500;
 }
 
-/* Stat Cards Styling (Di-improve dikit) */
 .stat-card .card-body {
-    /* Menyamakan padding & gap persis seperti desain asli */
     padding: 1.5rem;
     gap: 1.5rem;
 }
@@ -135,7 +133,7 @@ a {
 .stat-card .card-info h3 {
     font-size: 2rem;
     font-weight: 700;
-    line-height: 1.2; /* Biar gak terlalu jauh jaraknya */
+    line-height: 1.2;
 }
 
 .stat-card .card-info p {
@@ -153,7 +151,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0; /* Biar ukuran ikon gak gepeng */
+    flex-shrink: 0;
 }
 
 .stat-card .card-info {
@@ -175,7 +173,7 @@ a {
     background-color: #dc3545;
 }
 
-/* Toggle & Overlay Styling (SESUAI FILE ASLI LU) */
+/* Toggle & Overlay Styling */
 .sidebar-toggle-btn,
 .sidebar-close-btn {
     background: none;
@@ -201,7 +199,6 @@ a {
     display: none;
 }
 
-/* Tampilan Mobile (SESUAI FILE ASLI LU) */
 @media (max-width: 991px) {
     .admin-wrapper.sidebar-open {
         grid-template-columns: 1fr;
@@ -220,14 +217,10 @@ a {
     }
 }
 
-/* =================================
-   TAMBAHAN UNTUK MANAJEMEN LAYANAN
-   ================================= */
-
 /* Styling Tabel Data */
 .data-table {
-    min-width: 800px; /* Biar di layar kecil tetep ada space, sisanya di-handle table-responsive */
-    white-space: nowrap; /* Biar teks di dalem sel gak turun baris */
+    min-width: 800px;
+    white-space: nowrap;
 }
 
 .data-table th,
@@ -260,7 +253,6 @@ a {
     background-color: #6c757d;
 }
 
-/* Styling Tombol Aksi */
 .action-buttons .btn-edit {
     background-color: #007bff;
     color: #fff;
@@ -271,55 +263,47 @@ a {
     color: #fff;
 }
 
-/* =================================
-   TAMBAHAN UNTUK MANAJEMEN PESANAN
-   ================================= */
 /* Styling Tombol Filter */
 .btn-maroon {
     background-color: var(--maroon);
     color: white;
 }
 .btn-maroon:hover {
-    background-color: #6d1111; /* marun lebih gelap */
+    background-color: #6d1111;
     color: white;
 }
 
-/* Styling Badge Status Pesanan */
 .status-menunggu {
-    background-color: #fd7e14; /* orange */
+    background-color: #fd7e14;
 }
 
 .status-dicek {
-    background-color: #17a2b8; /* Biru muda / info */
+    background-color: #17a2b8;
 }
 
 .status-proses {
-    background-color: #007bff; /* blue */
+    background-color: #007bff;
 }
 .status-selesai {
-    background-color: #28a745; /* green */
+    background-color: #28a745;
 }
 .status-dikirim {
-    background-color: #6f42c1; /* purple */
+    background-color: #6f42c1;
 }
 .status-dibatalkan {
-    background-color: #dc3545; /* red */
+    background-color: #dc3545;
 }
 
-/* Styling Tombol Aksi Detail */
 .action-buttons .btn-detail {
     background-color: #6c757d;
     color: #fff;
 }
 
-/* =================================
-   KUSTOMISASI PAGINATION BOOTSTRAP
-   ================================= */
 .pagination .page-item.active .page-link {
     background-color: var(--maroon);
     border-color: var(--maroon);
     color: white;
-    z-index: 1; /* Biar layer-nya di atas */
+    z-index: 1;
 }
 
 .pagination .page-link {
@@ -328,7 +312,7 @@ a {
 
 .pagination .page-link:hover {
     color: white;
-    background-color: #6d1111; /* marun lebih gelap */
+    background-color: #6d1111;
     border-color: #6d1111;
     z-index: 2;
 }
