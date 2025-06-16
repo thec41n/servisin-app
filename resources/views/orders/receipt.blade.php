@@ -58,6 +58,10 @@
 <body>
     <div class="container">
         <div class="header">
+            @if ($setting->logo_url)
+                <img src="{{ public_path('storage/' . $setting->logo) }}" alt="Logo"
+                    style="width: 150px; margin-bottom: 10px;">
+            @endif
             <h2>E-Receipt Servis.in</h2>
             <p>Kode Pelacakan: <strong>{{ $order->tracking_code }}</strong></p>
         </div>
@@ -87,9 +91,18 @@
             </tbody>
         </table>
 
-        <div class="footer">
-            <p>Terima kasih telah menggunakan jasa kami.</p>
-            <p>Dicetak pada: {{ now()->format('d M Y, H:i') }}</p>
+        <div class="footer" style="margin-top: 40px; border-top: 1px solid #ddd; padding-top: 10px;">
+            <p>
+                <strong>Harap simpan dan tunjukkan E-Receipt ini sebagai bukti pemesanan saat Anda datang ke tempat
+                    servis kami.</strong>
+            </p>
+            <p>
+                <strong>Lokasi Servis:</strong><br>
+                {{ $setting->address ?? 'Jl. Pembangunan No. 123, Depok, Jawa Barat' }}
+            </p>
+            <p style="font-size: 10px; color: #777;">
+                Dicetak pada: {{ now()->format('d M Y, H:i') }}
+            </p>
         </div>
     </div>
 </body>

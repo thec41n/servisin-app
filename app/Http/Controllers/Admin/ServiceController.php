@@ -32,15 +32,17 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $messages = [
-            'name.required' => 'Nama layanan wajib diisi!',
-            'description.required' => 'Deskripsi tidak boleh kosong.',
-            'price.required' => 'Harga harus diisi.',
-            'price.integer' => 'Harga harus dalam bentuk angka.',
-            'image.required' => 'Gambar layanan wajib diisi',
-            'image.image' => 'File yang diupload harus berupa gambar.',
-            'image.mimes' => 'Format gambarnya cuma boleh jpeg, png, jpg, atau gif.',
-            'image.max' => 'Ukuran gambar terlalu besar! Maksimal 5MB.',
-            'status.required' => 'Statusnya dipilih dulu, aktif atau tidak aktif.',
+            'name.required' => 'Nama layanan wajib diisi.',
+            'name.string'   => 'Nama layanan harus berupa teks.',
+            'name.max'      => 'Nama layanan tidak boleh lebih dari 255 karakter.',
+            'description.required' => 'Deskripsi layanan wajib diisi.',
+            'price.required' => 'Harga wajib diisi.',
+            'price.integer'  => 'Harga harus berupa angka.',
+            'image.required' => 'Gambar layanan wajib diunggah.',
+            'image.image'    => 'File yang diunggah harus berupa gambar.',
+            'image.mimes'    => 'Format gambar yang diizinkan adalah: jpeg, png, jpg, gif, svg.',
+            'image.max'      => 'Ukuran gambar tidak boleh melebihi 5MB.',
+            'status.required' => 'Silakan pilih status layanan.',
         ];
 
         $request->validate([

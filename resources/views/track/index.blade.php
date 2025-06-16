@@ -29,6 +29,11 @@
                                             Lacak Sekarang
                                         </button>
                                     </div>
+                                    @error('tracking_code')
+                                        <div class="text-danger mt-2">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </form>
                             </div>
                         </div>

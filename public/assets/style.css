@@ -7,9 +7,16 @@
 
 body {
     font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: column;
     background-color: var(--warm-white);
     color: var(--black);
     line-height: 1.6;
+    min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
 }
 
 /* =================================
@@ -525,4 +532,43 @@ body {
     font-size: 0.95rem;
     color: #555;
     margin-bottom: 0;
+}
+
+.file-upload-wrapper {
+    position: relative;
+    height: 10rem;
+}
+.file-upload-default {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #6c757d;
+}
+.file-upload-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+    padding: 0.5rem;
+}
+.file-upload-preview img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 5px;
+}
+.remove-preview-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
 }

@@ -32,9 +32,13 @@ class PageController extends Controller
 
     public function trackOrder(Request $request)
     {
+        $messages = [
+            'tracking_code.required' => 'Mohon masukkan kode pelacakan Anda.',
+        ];
+
         $request->validate([
             'tracking_code' => 'required|string',
-        ]);
+        ], $messages);
 
         $order = Order::where('tracking_code', $request->tracking_code)->first();
 

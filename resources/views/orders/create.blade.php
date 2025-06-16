@@ -35,6 +35,15 @@
                             <input type="hidden" name="service_id" value="{{ $service->id }}">
 
                             <h2>Lengkapi Data Diri & Detail Barang</h2>
+                            @if ($errors->any())
+                                <div class="alert alert-danger mb-3">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nama Lengkap</label>
                                 <input type="text" id="name" name="name" class="form-control form-control-lg"
@@ -58,11 +67,21 @@
                             <div class="mb-3">
                                 <label class="form-label">Unggah Foto Barang (Opsional)</label>
                                 <div class="file-upload-wrapper">
-                                    <input type="file" name="image" class="form-control" />
-                                    <i class="fas fa-cloud-upload-alt me-2"></i>
-                                    <span>Klik untuk memilih file...</span>
+                                    <input type="file" name="image" class="form-control" id="orderImageInput" />
+                                    <div class="file-upload-default">
+                                        <i class="fas fa-cloud-upload-alt me-2"></i>
+                                        <span>Klik untuk memilih file...</span>
+                                        <small>Maksimal Ukuran Gambar 5MB</small>
+                                    </div>
+                                    <div class="file-upload-preview d-none">
+                                        <img src="" alt="Preview" />
+                                        <button type="button" class="btn-close remove-preview-btn"
+                                            aria-label="Close"></button>
+                                    </div>
                                 </div>
-                                <small>Maksimal Ukuran Gambar 5MB</small>
+                                @error('image')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="d-grid mt-4">
                                 <button type="submit" class="btn btn-primary btn-lg">
@@ -79,17 +98,34 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const fileInput = document.querySelector('.file-upload-wrapper input[type="file"]');
+            const fileInput = document.querySelector('#orderImageInput');
+            const previewContainer = document.querySelector('.file-upload-preview');
+            const defaultTextContainer = document.querySelector('.file-upload-default');
+            const previewImage = previewContainer.querySelector('img');
+            const removeBtn = previewContainer.querySelector('.remove-preview-btn');
+            const fileTextSpan = defaultTextContainer.querySelector('span');
 
             if (fileInput) {
                 fileInput.addEventListener('change', function() {
-                    const fileText = this.closest('.file-upload-wrapper').querySelector('span');
+                    const file = this.files[0];
+                    if (file) {
+                        fileTextSpan.textContent = file.name;
 
-                    if (this.files && this.files.length > 0) {
-                        fileText.textContent = this.files[0].name;
-                    } else {
-                        fileText.textContent = 'Klik untuk memilih file...';
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewImage.setAttribute('src', e.target.result);
+                            previewContainer.classList.remove('d-none');
+                            defaultTextContainer.classList.add('d-none');
+                        }
+                        reader.readAsDataURL(file);
                     }
+                });
+
+                removeBtn.addEventListener('click', function() {
+                    fileInput.value = "";
+                    previewContainer.classList.add('d-none');
+                    defaultTextContainer.classList.remove('d-none');
+                    fileTextSpan.textContent = 'Klik untuk memilih file...';
                 });
             }
         });

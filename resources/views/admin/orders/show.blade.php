@@ -31,6 +31,9 @@
                             <option value="dibatalkan" {{ $order->status == 'dibatalkan' ? 'selected' : '' }}>Dibatalkan
                             </option>
                         </select>
+                        @error('status')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="col-md-3 mt-2">
                         <button type="submit" class="btn btn-primary w-100">Update</button>

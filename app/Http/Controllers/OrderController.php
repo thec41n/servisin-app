@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Service;
+use App\Models\Setting;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,20 @@ class OrderController extends Controller
         return view('orders.create', compact('service'));
     }
 
-    public function store(\Illuminate\Http\Request $request)
+    public function store(Request $request)
     {
+        $messages = [
+            'service_id.required' => 'Silakan pilih layanan terlebih dahulu.',
+            'service_id.exists'   => 'Layanan yang dipilih tidak valid.',
+            'name.required' => 'Nama lengkap wajib diisi.',
+            'email.required' => 'Alamat email wajib diisi.',
+            'email.email'    => 'Format alamat email tidak valid.',
+            'phone_number.required' => 'Nomor telepon wajib diisi.',
+            'item_detail.required' => 'Mohon jelaskan detail barang dan kerusakannya.',
+            'image.image'    => 'File yang diunggah harus berupa gambar.',
+            'image.max'      => 'Ukuran gambar tidak boleh melebihi 5MB.',
+        ];
+
         $request->validate([
             'service_id' => 'required|exists:services,id',
             'name' => 'required|string|max:255',
@@ -23,7 +36,7 @@ class OrderController extends Controller
             'phone_number' => 'required|string|max:20',
             'item_detail' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
-        ]);
+        ], $messages);
 
         $dataToStore = $request->except(['_token', 'image']);
 
@@ -47,10 +60,11 @@ class OrderController extends Controller
 
     public function receipt(Order $order)
     {
-        $pdf = app('dompdf.wrapper')->loadView('orders.receipt', compact('order'));
+        $setting = Setting::first();
+
+        $pdf = app('dompdf.wrapper')->loadView('orders.receipt', compact('order', 'setting'));
 
         $fileName = 'receipt-' . $order->tracking_code . '.pdf';
-
         return $pdf->download($fileName);
     }
 }
