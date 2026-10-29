@@ -22,6 +22,7 @@
                             <div class="price">Mulai dari Rp {{ number_format($service->price, 0, ',', '.') }}</div>
 
                             <div class="full-description">
+                                {{-- Rich text written only by admins (routes behind can:admin). --}}
                                 {!! $service->description !!}
                             </div>
 

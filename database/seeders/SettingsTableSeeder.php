@@ -19,11 +19,11 @@ class SettingsTableSeeder extends Seeder
             'phone_number' => '081234567890',
             'address' => 'Jl. Pembangunan No. 123, Depok, Jawa Barat',
             'logo' => null,
-            'social_links' => json_encode([
-                'facebook' => '#',
-                'instagram' => '#',
-                'twitter' => '#',
-            ]),
+            'social_links' => [
+                'facebook' => 'https://facebook.com',
+                'instagram' => 'https://instagram.com',
+                'twitter' => 'https://x.com',
+            ],
         ]);
     }
 }

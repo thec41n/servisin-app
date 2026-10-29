@@ -11,7 +11,7 @@ class SettingController extends Controller
 {
     public function edit()
     {
-        $setting = Setting::first();
+        $setting = Setting::firstOrNew();
 
         return view('admin.settings.index', compact('setting'));
     }
@@ -19,31 +19,26 @@ class SettingController extends Controller
     public function update(Request $request)
     {
         $messages = [
-            'name.required' => 'Nama layanan wajib diisi.',
-            'name.string'   => 'Nama layanan harus berupa teks.',
-            'name.max'      => 'Nama layanan tidak boleh lebih dari 255 karakter.',
-            'description.required' => 'Deskripsi layanan wajib diisi.',
-            'price.required' => 'Harga wajib diisi.',
-            'price.integer'  => 'Harga harus berupa angka.',
-            'image.required' => 'Gambar layanan wajib diunggah.',
-            'image.image'    => 'File yang diunggah harus berupa gambar.',
-            'image.mimes'    => 'Format gambar yang diizinkan adalah: jpeg, png, jpg, gif, svg.',
-            'image.max'      => 'Ukuran gambar tidak boleh melebihi 5MB.',
-            'status.required' => 'Silakan pilih status layanan.',
+            'email.email' => 'Format email kontak tidak valid.',
+            'logo.image' => 'Logo harus berupa gambar.',
+            'logo.mimes' => 'Format logo yang diizinkan adalah: png, jpg, jpeg.',
+            'logo.max' => 'Ukuran logo tidak boleh melebihi 5MB.',
+            'social_links.*.url' => 'Link media sosial harus diawali http:// atau https://.',
         ];
 
-        $request->validate([
+        $dataToUpdate = $request->validate([
             'website_name' => 'nullable|string|max:255',
-            'email' => 'nullable|email',
-            'phone_number' => 'nullable|string',
-            'address' => 'nullable|string',
+            'email' => 'nullable|email|max:255',
+            'phone_number' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:1000',
             'logo' => 'nullable|image|mimes:png,jpg,jpeg|max:5120',
-            'social_links' => 'nullable|array'
+            'social_links' => 'nullable|array:facebook,instagram,twitter',
+            'social_links.*' => 'nullable|url:http,https|max:255',
         ], $messages);
 
         $setting = Setting::firstOrCreate([]);
 
-        $dataToUpdate = $request->except(['_token', 'logo']);
+        unset($dataToUpdate['logo']);
 
         if ($request->hasFile('logo')) {
             if ($setting->logo && Storage::disk('public')->exists($setting->logo)) {

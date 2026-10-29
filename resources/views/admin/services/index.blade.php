@@ -43,7 +43,7 @@
                                 </td>
                                 <td>{{ $service->name }}</td>
                                 <td>
-                                    {!! $service->short_description !!}
+                                    {{ $service->short_description }}
                                 </td>
                                 <td>Rp {{ number_format($service->price, 0, ',', '.') }}</td>
                                 <td>

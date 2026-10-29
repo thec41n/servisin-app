@@ -40,7 +40,7 @@ class ServiceController extends Controller
             'price.integer'  => 'Harga harus berupa angka.',
             'image.required' => 'Gambar layanan wajib diunggah.',
             'image.image'    => 'File yang diunggah harus berupa gambar.',
-            'image.mimes'    => 'Format gambar yang diizinkan adalah: jpeg, png, jpg, gif, svg.',
+            'image.mimes'    => 'Format gambar yang diizinkan adalah: jpeg, png, jpg, webp.',
             'image.max'      => 'Ukuran gambar tidak boleh melebihi 5MB.',
             'status.required' => 'Silakan pilih status layanan.',
         ];
@@ -48,8 +48,8 @@ class ServiceController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'price' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            'price' => 'required|integer|min:0',
+            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
             'status' => 'required|boolean',
         ], $messages);
 
@@ -94,7 +94,7 @@ class ServiceController extends Controller
             'price.integer' => 'Harga harus dalam bentuk angka.',
             'image.required' => 'Gambar layanan wajib diisi',
             'image.image' => 'File yang diupload harus berupa gambar.',
-            'image.mimes' => 'Format gambarnya cuma boleh jpeg, png, jpg, atau gif.',
+            'image.mimes' => 'Format gambarnya cuma boleh jpeg, png, jpg, atau webp.',
             'image.max' => 'Ukuran gambar terlalu besar! Maksimal 5MB.',
             'status.required' => 'Statusnya dipilih dulu, aktif atau tidak aktif.',
         ];
@@ -102,8 +102,8 @@ class ServiceController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'price' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            'price' => 'required|integer|min:0',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'status' => 'required|boolean',
         ], $messages);
 

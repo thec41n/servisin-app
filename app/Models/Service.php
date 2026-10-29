@@ -25,7 +25,7 @@ class Service extends Model
     protected function shortDescription(): Attribute
     {
         return Attribute::make(
-            get: fn() => Str::limit($this->description, 50, '...'),
+            get: fn() => Str::limit(strip_tags($this->description), 50, '...'),
         );
     }
 
