@@ -23,7 +23,7 @@ class DashboardController extends Controller
         $chartLabels = [];
         for ($i = 6; $i >= 0; $i--) {
             $date = now()->subDays($i);
-            $chartLabels[] = $date->format('D');
+            $chartLabels[] = $date->translatedFormat('D');
             $chartData[] = Order::whereDate('created_at', $date)->count();
         }
 

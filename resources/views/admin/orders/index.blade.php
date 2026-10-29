@@ -65,7 +65,7 @@
                                 <td>{{ $order->name }}</td>
                                 <td>{{ $order->phone_number }}</td>
                                 <td>{{ $order->service->name }}</td>
-                                <td>{{ $order->created_at->format('d M Y') }}</td>
+                                <td>{{ $order->created_at->translatedFormat('d M Y') }}</td>
                                 <td>
                                     <span
                                         class="badge status-{{ strtolower($order->status) }}">{{ $order->status }}</span>

@@ -101,7 +101,7 @@
                 {{ $setting->address ?? 'Jl. Pembangunan No. 123, Depok, Jawa Barat' }}
             </p>
             <p style="font-size: 10px; color: #777;">
-                Dicetak pada: {{ now()->format('d M Y, H:i') }}
+                Dicetak pada: {{ now()->translatedFormat('d F Y, H:i') }}
             </p>
         </div>
     </div>

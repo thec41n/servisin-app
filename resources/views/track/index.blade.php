@@ -67,7 +67,7 @@
                                                         <div class="timeline-content">
                                                             <h4>{{ ucfirst($status) }}</h4>
                                                             <p>Status pesanan Anda saat ini. (Diperbarui pada:
-                                                                {{ $order->updated_at->format('d M Y, H:i') }})</p>
+                                                                {{ $order->updated_at->translatedFormat('d F Y, H:i') }})</p>
                                                         </div>
                                                     </li>
                                                 @elseif (!$currentStatusFound)
