@@ -38,7 +38,7 @@
                         </div>
                         <div class="card-info">
                             <h3 class="mb-0">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
-                            <p class="mb-0">Pendapatan Total (Selesai)</p>
+                            <p class="mb-0">Pendapatan (Selesai & Dikirim)</p>
                         </div>
                     </div>
                 </div>

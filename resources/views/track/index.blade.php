@@ -87,6 +87,12 @@
                                                 @endif
                                             @endforeach
                                         </ul>
+                                        <div class="text-center mt-4">
+                                            <a href="{{ route('orders.receipt', $order->tracking_code) }}"
+                                                class="btn btn-primary">
+                                                <i class="fas fa-download me-2"></i>Download E-Receipt
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             @endif

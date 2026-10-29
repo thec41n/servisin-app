@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Service extends Model
 {
@@ -21,6 +22,11 @@ class Service extends Model
     ];
 
     protected $appends = ['image_url'];
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
 
     protected function shortDescription(): Attribute
     {

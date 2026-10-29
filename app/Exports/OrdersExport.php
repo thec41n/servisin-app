@@ -57,7 +57,7 @@ class OrdersExport implements FromCollection, WithHeadings, WithMapping
             $order->email,
             $order->phone_number,
             $order->service->name,
-            $order->service->price,
+            $order->price,
             $order->status,
             $order->created_at->format('d-m-Y H:i:s'),
         ];

@@ -86,7 +86,7 @@
                 <tr>
                     <td>{{ $order->service->name }}</td>
                     <td>{{ $order->item_detail }}</td>
-                    <td>Rp {{ number_format($order->service->price, 0, ',', '.') }}</td>
+                    <td>Rp {{ number_format($order->price, 0, ',', '.') }}</td>
                 </tr>
             </tbody>
         </table>

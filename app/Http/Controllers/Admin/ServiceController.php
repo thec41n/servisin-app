@@ -127,6 +127,11 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
+        if ($service->orders()->exists()) {
+            return redirect()->route('admin.services.index')
+                ->with('error', 'Layanan ini sudah memiliki pesanan, jadi tidak bisa dihapus. Ubah statusnya menjadi Tidak Aktif saja.');
+        }
+
         if ($service->image) {
             Storage::disk('public')->delete($service->image);
         }

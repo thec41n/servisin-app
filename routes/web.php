@@ -23,10 +23,10 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/services/{service}', [PageController::class, 'showService'])->name('services.show_public');
 Route::get('/order/{service}', [PublicOrderController::class, 'create'])->name('orders.create');
-Route::post('/order', [PublicOrderController::class, 'store'])->name('orders.store');
-Route::get('/orders/{order}/receipt', [PublicOrderController::class, 'receipt'])->name('orders.receipt');
+Route::post('/order', [PublicOrderController::class, 'store'])->middleware('throttle:5,1')->name('orders.store');
+Route::get('/orders/{order:tracking_code}/receipt', [PublicOrderController::class, 'receipt'])->name('orders.receipt');
 Route::get('/track', [PageController::class, 'showTrackPage'])->name('track.show');
-Route::post('/track', [PageController::class, 'trackOrder'])->name('track.post');
+Route::post('/track', [PageController::class, 'trackOrder'])->middleware('throttle:10,1')->name('track.post');
 Route::get('/services', [PageController::class, 'showAllServices'])->name('services.index_public');
 Route::get('/kontak-kami', [PageController::class, 'showContactPage'])->name('contact.show');
 

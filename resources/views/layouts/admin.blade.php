@@ -40,6 +40,18 @@
         </script>
     @endif
 
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                title: 'Gagal!',
+                text: @json(session('error')),
+                icon: 'error',
+                confirmButtonColor: '#8e1616',
+                confirmButtonText: 'Oke'
+            });
+        </script>
+    @endif
+
     @if (session('login_success'))
         <script>
             Swal.fire({

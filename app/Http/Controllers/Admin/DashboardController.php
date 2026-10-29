@@ -13,9 +13,7 @@ class DashboardController extends Controller
     public function index()
     {
         $newOrdersCount = Order::where('status', 'menunggu')->count();
-        $totalRevenue = Order::whereIn('orders.status', ['selesai', 'dikirim'])
-            ->join('services', 'orders.service_id', '=', 'services.id')
-            ->sum('services.price');
+        $totalRevenue = Order::whereIn('status', ['selesai', 'dikirim'])->sum('price');
         $activeServicesCount = Service::where('status', true)->count();
         $uniqueCustomersCount = Order::distinct()->count('email');
         $latestOrders = Order::with('service')->latest()->take(5)->get();
