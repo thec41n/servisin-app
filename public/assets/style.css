@@ -81,8 +81,13 @@ main {
     transition: color 0.3s ease;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.navbar-nav .nav-link.active {
     color: var(--maroon);
+}
+
+.navbar-nav .nav-link.active {
+    font-weight: 600;
 }
 
 .navbar-toggler {
@@ -164,10 +169,16 @@ main {
     font-size: 1.2rem;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
+    object-fit: cover;
 }
 
-.service-card-content {
-    padding: 1.5rem;
+.service-card-category {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--maroon);
+    margin-bottom: 0.25rem;
 }
 
 .card-title {
@@ -196,13 +207,50 @@ main {
     color: var(--warm-white) !important;
 }
 
-.footer p {
+.footer p,
+.footer-links li {
     color: var(--beige-gold);
+}
+
+.footer-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--warm-white);
+    margin-bottom: 1rem;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+    overflow-wrap: anywhere;
+}
+
+.footer a:not(.logo) {
+    color: var(--beige-gold);
+    text-decoration: none;
+}
+
+.footer a:not(.logo):hover {
+    color: var(--warm-white);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(232, 201, 153, 0.25);
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {
     .hero h1 {
         font-size: 2.5rem;
+    }
+
+    .page-header h1 {
+        font-size: 2.2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
     }
 }
 

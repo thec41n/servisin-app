@@ -24,19 +24,8 @@
             <div class="row g-4 justify-content-center">
 
                 @forelse ($services as $service)
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card service-card h-100">
-                            <img src="{{ $service->image_url }}" class="service-card-img" alt="{{ $service->name }}">
-                            <div class="card-body d-flex flex-column">
-                                <h3 class="card-title">{{ $service->name }}</h3>
-                                <p class="service-card-price">Mulai dari Rp
-                                    {{ number_format($service->price, 0, ',', '.') }}</p>
-                                <a href="{{ route('services.show_public', $service->id) }}"
-                                    class="btn btn-secondary mt-auto">
-                                    Lihat Detail
-                                </a>
-                            </div>
-                        </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <x-service-card :service="$service" />
                     </div>
                 @empty
                     <div class="col-12">
