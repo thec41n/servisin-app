@@ -107,10 +107,57 @@ main {
     min-width: 25px;
 }
 
-.social-icon {
+.social-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 1.25rem 0.4rem 0.4rem;
+    border: 2px solid var(--beige-gold);
     border-radius: 50px;
-    padding: 10px 20px;
-    font-size: 1rem;
+    background-color: #fff;
+    color: var(--black);
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-btn i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background-color: var(--maroon);
+    color: var(--warm-white);
+    transition: all 0.3s ease;
+}
+
+.social-btn:hover,
+.social-btn:focus-visible {
+    background-color: var(--maroon);
+    border-color: var(--maroon);
+    color: var(--warm-white);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.social-btn:hover i,
+.social-btn:focus-visible i {
+    background-color: var(--warm-white);
+    color: var(--maroon);
+}
+
+.social-btn:focus-visible {
+    outline: 3px solid rgba(142, 22, 22, 0.35);
+    outline-offset: 2px;
 }
 
 /* Hero Section */

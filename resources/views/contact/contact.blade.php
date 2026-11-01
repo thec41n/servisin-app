@@ -37,7 +37,7 @@
                                     <li>
                                         <i class="fab fa-whatsapp me-2"></i>
                                         <strong>WhatsApp:</strong> <a
-                                            href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $appSetting->phone_number) }}"
+                                            href="{{ whatsapp_url($appSetting->phone_number) }}"
                                             target="_blank" rel="noopener noreferrer">{{ $appSetting->phone_number }}</a>
                                     </li>
                                 @endif
@@ -49,28 +49,27 @@
                                 @endif
                             </ul>
 
-                            @if (
-                                !empty($appSetting->social_links) &&
-                                    (isset($appSetting->social_links['facebook']) ||
-                                        isset($appSetting->social_links['instagram']) ||
-                                        isset($appSetting->social_links['twitter'])))
+                            @php
+                                $socialLinks = array_filter($appSetting->social_links ?? []);
+                                $socialNetworks = [
+                                    'facebook' => ['fab fa-facebook-f', 'Facebook'],
+                                    'instagram' => ['fab fa-instagram', 'Instagram'],
+                                    'twitter' => ['fab fa-x-twitter', 'X / Twitter'],
+                                ];
+                            @endphp
+                            @if ($socialLinks)
                                 <hr class="my-4">
                                 <h3 class="mb-3 text-center">Ikuti Kami</h3>
-                                <div class="social-links text-center">
-                                    @if (isset($appSetting->social_links['facebook']))
-                                        <a href="{{ $appSetting->social_links['facebook'] }}" target="_blank" rel="noopener noreferrer"
-                                            class="btn btn-info social-icon me-2"><i class="fab fa-facebook-f"></i>
-                                            Facebook</a>
-                                    @endif
-                                    @if (isset($appSetting->social_links['instagram']))
-                                        <a href="{{ $appSetting->social_links['instagram'] }}" target="_blank" rel="noopener noreferrer"
-                                            class="btn btn-danger social-icon me-2"><i class="fab fa-instagram"></i>
-                                            Instagram</a>
-                                    @endif
-                                    @if (isset($appSetting->social_links['twitter']))
-                                        <a href="{{ $appSetting->social_links['twitter'] }}" target="_blank" rel="noopener noreferrer"
-                                            class="btn btn-dark social-icon"><i class="fab fa-twitter"></i> Twitter/X</a>
-                                    @endif
+                                <div class="social-links">
+                                    @foreach ($socialNetworks as $network => [$icon, $label])
+                                        @isset($socialLinks[$network])
+                                            <a href="{{ $socialLinks[$network] }}" class="social-btn" target="_blank"
+                                                rel="noopener noreferrer">
+                                                <i class="{{ $icon }}" aria-hidden="true"></i>
+                                                <span>{{ $label }}</span>
+                                            </a>
+                                        @endisset
+                                    @endforeach
                                 </div>
                             @endif
 
