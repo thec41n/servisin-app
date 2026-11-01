@@ -190,20 +190,6 @@
 @endsection
 @push('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const imageModal = document.getElementById('imageModal');
-            const modalImage = document.getElementById('modalImage');
-            imageModal.addEventListener('show.bs.modal', function(event) {
-                const triggerElement = event.relatedTarget;
-                const imageSrc = triggerElement.getAttribute('data-src');
-                modalImage.setAttribute('src', imageSrc);
-            });
-        });
-    </script>
-@endpush
-
-@push('scripts')
-    <script>
         function formatRupiah(input) {
             let value = input.value;
             value = value.replace(/\D/g, '');

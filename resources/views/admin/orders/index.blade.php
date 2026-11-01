@@ -33,7 +33,7 @@
                 <div class="flex-grow-1">
                     <label for="search_query" class="form-label">Cari Pesanan</label>
                     <input type="text" name="search" id="search_query" class="form-control"
-                        placeholder="Kode, Nama, atau No. Telepon" value="{{ request('search') }}">
+                        placeholder="Kode, Nama, Email, atau No. Telepon" value="{{ request('search') }}">
                 </div>
 
                 <div>
@@ -61,14 +61,14 @@
                     <tbody>
                         @forelse ($orders as $order)
                             <tr>
-                                <td>#SVS-{{ $order->id }}</td>
+                                <td>{{ $order->tracking_code }}</td>
                                 <td>{{ $order->name }}</td>
                                 <td>{{ $order->phone_number }}</td>
                                 <td>{{ $order->service->name }}</td>
                                 <td>{{ $order->created_at->translatedFormat('d M Y') }}</td>
                                 <td>
                                     <span
-                                        class="badge status-{{ strtolower($order->status) }}">{{ $order->status }}</span>
+                                        class="badge status-{{ strtolower($order->status) }}">{{ ucfirst($order->status) }}</span>
                                 </td>
                                 <td class="action-buttons">
                                     <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-sm btn-detail">
@@ -78,7 +78,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center">Belum ada pesanan yang masuk.</td>
+                                <td colspan="7" class="text-center">Belum ada pesanan yang masuk.</td>
                             </tr>
                         @endforelse
                     </tbody>

@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="social_links[facebook]" class="form-label">Link Facebook</label>
+                            <label for="facebook-link" class="form-label">Link Facebook</label>
                             <input type="url" id="facebook-link" name="social_links[facebook]"
                                 class="form-control @error('social_links.facebook') is-invalid @enderror"
                                 value="{{ old('social_links.facebook', $setting->social_links['facebook'] ?? '') }}" />
@@ -74,7 +74,7 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="social_links[instagram]" class="form-label">Link Instagram</label>
+                            <label for="instagram-link" class="form-label">Link Instagram</label>
                             <input type="url" id="instagram-link" name="social_links[instagram]"
                                 class="form-control @error('social_links.instagram') is-invalid @enderror"
                                 value="{{ old('social_links.instagram', $setting->social_links['instagram'] ?? '') }}" />
@@ -83,7 +83,7 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="social_links[twitter]" class="form-label">Link Twitter/X</label>
+                            <label for="twitter-link" class="form-label">Link Twitter/X</label>
                             <input type="url" id="twitter-link" name="social_links[twitter]"
                                 class="form-control @error('social_links.twitter') is-invalid @enderror"
                                 value="{{ old('social_links.twitter', $setting->social_links['twitter'] ?? '') }}" />
@@ -100,18 +100,14 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
 
-                            <div class="file-upload-wrapper text-center"
-                                onclick="document.getElementById('logoInput').click();"
+                            <label for="logoInput" class="file-upload-wrapper d-block text-center"
                                 style="cursor: pointer; border: 2px dashed #ddd; padding: 1rem;">
                                 <div id="logoPreviewContainer">
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#logoModal"
-                                        data-src="{{ $setting->logo_url }}">
-                                        <img src="{{ $setting->logo_url }}" alt="Logo saat ini" class="img-thumbnail"
-                                            width="150" id="logoPreview">
-                                    </a>
+                                    <img src="{{ $setting->logo_url }}" alt="Logo saat ini" class="img-thumbnail"
+                                        width="150" id="logoPreview">
                                     <p class="mb-0 small mt-2 text-muted">Klik untuk mengubah logo</p>
                                 </div>
-                            </div>
+                            </label>
 
                             <button type="button" id="removeLogoBtn"
                                 class="btn btn-sm btn-outline-danger mt-2 d-none">Batal & kembalikan ke logo awal</button>
@@ -153,15 +149,6 @@
                 logoInput.val('');
                 logoPreview.attr('src', originalLogoSrc);
                 $(this).addClass('d-none');
-            });
-
-            const logoModal = $('#logoModal');
-            const modalLogoImage = $('#modalLogoImage');
-
-            logoModal.on('show.bs.modal', function(event) {
-                const triggerElement = $(event.relatedTarget);
-                const imageSrc = triggerElement.data('src');
-                modalLogoImage.attr('src', imageSrc);
             });
         });
     </script>

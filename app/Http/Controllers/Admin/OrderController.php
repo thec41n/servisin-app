@@ -21,8 +21,9 @@ class OrderController extends Controller
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
-                $q->where('id', 'like', '%' . $search . '%')
+                $q->where('tracking_code', 'like', '%' . $search . '%')
                     ->orWhere('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%')
                     ->orWhere('phone_number', 'like', '%' . $search . '%');
             });
         }

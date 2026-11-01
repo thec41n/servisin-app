@@ -96,10 +96,10 @@
                     <tbody>
                         @forelse ($latestOrders as $order)
                             <tr>
-                                <td>#SVS-{{ $order->id }}</td>
+                                <td>{{ $order->tracking_code }}</td>
                                 <td>{{ $order->name }}</td>
                                 <td>{{ $order->service->name }}</td>
-                                <td><span class="badge status-{{ strtolower($order->status) }}">{{ $order->status }}</span>
+                                <td><span class="badge status-{{ strtolower($order->status) }}">{{ ucfirst($order->status) }}</span>
                                 </td>
                                 <td>
                                     <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-sm btn-detail">

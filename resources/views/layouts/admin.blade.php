@@ -32,7 +32,7 @@
         <script>
             Swal.fire({
                 title: 'Berhasil!',
-                text: '{{ session('success') }}',
+                text: @json(session('success')),
                 icon: 'success',
                 confirmButtonColor: '#8e1616',
                 confirmButtonText: 'Oke'
@@ -56,7 +56,7 @@
         <script>
             Swal.fire({
                 title: 'Selamat Datang!',
-                text: '{{ session('login_success') }}',
+                text: @json(session('login_success')),
                 icon: 'success',
                 timer: 2500,
                 showConfirmButton: false,

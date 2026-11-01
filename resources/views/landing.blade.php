@@ -57,12 +57,12 @@
         <script>
             Swal.fire({
                 title: 'Pesanan Berhasil!',
-                html: '{!! session('order_success') !!}',
+                html: @json(session('order_success')),
                 icon: 'success',
                 confirmButtonColor: '#8e1616',
                 confirmButtonText: 'Download E-Receipt',
                 preConfirm: () => {
-                    window.location.href = '{{ session('receipt_url') }}';
+                    window.location.href = @json(session('receipt_url'));
                 }
             });
         </script>

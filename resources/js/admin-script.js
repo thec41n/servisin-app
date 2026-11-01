@@ -16,7 +16,7 @@ const closeSidebar = () => {
   overlay.classList.remove("active");
 };
 
-toggleBtn.addEventListener("click", () => {
+toggleBtn?.addEventListener("click", () => {
   if (adminWrapper.classList.contains("sidebar-open")) {
     closeSidebar();
   } else {
@@ -24,5 +24,5 @@ toggleBtn.addEventListener("click", () => {
   }
 });
 
-closeBtn.addEventListener("click", closeSidebar);
-overlay.addEventListener("click", closeSidebar);
+closeBtn?.addEventListener("click", closeSidebar);
+overlay?.addEventListener("click", closeSidebar);

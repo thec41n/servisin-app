@@ -55,7 +55,7 @@
                         <li><strong>Layanan:</strong> {{ $order->service->name }}</li>
                         <li><strong>Harga:</strong> Rp {{ number_format($order->price, 0, ',', '.') }}</li>
                         <li><strong>Status:</strong> <span
-                                class="badge status-{{ strtolower($order->status) }}">{{ $order->status }}</span></li>
+                                class="badge status-{{ strtolower($order->status) }}">{{ ucfirst($order->status) }}</span></li>
                     </ul>
                 </div>
 

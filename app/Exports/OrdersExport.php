@@ -52,7 +52,7 @@ class OrdersExport implements FromCollection, WithHeadings, WithMapping
     public function map($order): array
     {
         return [
-            '#SVS-' . $order->id,
+            $order->tracking_code,
             $order->name,
             $order->email,
             $order->phone_number,
