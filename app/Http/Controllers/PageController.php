@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Service;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PageController extends Controller
 {
@@ -51,14 +52,16 @@ class PageController extends Controller
 
     public function showAllServices(Request $request)
     {
-        $query = Service::where('status', true);
-        if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-        if ($request->filled('category')) {
-            $query->where('name', 'like', '%' . $request->category . '%');
-        }
-        $services = $query->latest()->paginate(9);
+        $filters = $request->validate([
+            'search' => 'nullable|string|max:100',
+            'category' => ['nullable', Rule::in(array_keys(Service::CATEGORIES))],
+        ]);
+
+        $services = Service::where('status', true)
+            ->when($filters['search'] ?? null, fn ($query, $search) => $query->where('name', 'like', "%{$search}%"))
+            ->when($filters['category'] ?? null, fn ($query, $category) => $query->where('category', $category))
+            ->latest()
+            ->paginate(9);
 
         if ($request->ajax()) {
             return view('services._service_list', compact('services'))->render();

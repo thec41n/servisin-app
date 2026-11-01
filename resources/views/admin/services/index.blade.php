@@ -101,6 +101,19 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="category" class="form-label">Kategori</label>
+                            <select id="category" name="category"
+                                class="form-select @error('category') is-invalid @enderror">
+                                @foreach (\App\Models\Service::CATEGORIES as $value => $label)
+                                    <option value="{{ $value }}" @selected(old('category') === $value)>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @error('category')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
                             <label for="description" class="form-label">Deskripsi</label>
                             <textarea id="description" name="description" rows="4"
                                 class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
@@ -261,6 +274,7 @@
                         .then(response => response.json())
                         .then(data => {
                             modal.find('#name').val(data.name);
+                            modal.find('#category').val(data.category);
                             modal.find('#price').val(data.price);
                             modal.find('#status').val(data.status);
                             modal.find('#description').summernote('code', data.description);

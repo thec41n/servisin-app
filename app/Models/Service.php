@@ -13,8 +13,14 @@ class Service extends Model
 {
     use HasFactory;
 
+    public const CATEGORIES = [
+        'laptop' => 'Laptop & PC',
+        'smartphone' => 'Smartphone & Tablet',
+    ];
+
     protected $fillable = [
         'name',
+        'category',
         'description',
         'price',
         'image',

@@ -6,6 +6,7 @@ use App\Models\Service;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class ServiceController extends Controller
 {
@@ -16,14 +17,6 @@ class ServiceController extends Controller
     {
         $services = Service::latest()->paginate(10);
         return view('admin.services.index', compact('services'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -43,35 +36,24 @@ class ServiceController extends Controller
             'image.mimes'    => 'Format gambar yang diizinkan adalah: jpeg, png, jpg, webp.',
             'image.max'      => 'Ukuran gambar tidak boleh melebihi 5MB.',
             'status.required' => 'Silakan pilih status layanan.',
+            'category.required' => 'Silakan pilih kategori layanan.',
+            'category.in' => 'Kategori layanan tidak valid.',
         ];
 
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
+            'category' => ['required', Rule::in(array_keys(Service::CATEGORIES))],
             'description' => 'required|string',
             'price' => 'required|integer|min:0',
             'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
             'status' => 'required|boolean',
         ], $messages);
 
-        $imagePath = $request->file('image')->store('services', 'public');
+        $data['image'] = $request->file('image')->store('services', 'public');
 
-        Service::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'image' => $imagePath,
-            'status' => $request->status,
-        ]);
+        Service::create($data);
 
         return redirect()->route('admin.services.index')->with('success', 'Layanan baru berhasil ditambahkan!');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
@@ -97,27 +79,29 @@ class ServiceController extends Controller
             'image.mimes' => 'Format gambarnya cuma boleh jpeg, png, jpg, atau webp.',
             'image.max' => 'Ukuran gambar terlalu besar! Maksimal 5MB.',
             'status.required' => 'Statusnya dipilih dulu, aktif atau tidak aktif.',
+            'category.required' => 'Kategorinya dipilih dulu.',
+            'category.in' => 'Kategori layanan tidak valid.',
         ];
 
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
+            'category' => ['required', Rule::in(array_keys(Service::CATEGORIES))],
             'description' => 'required|string',
             'price' => 'required|integer|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'status' => 'required|boolean',
         ], $messages);
 
-        $dataToUpdate = $request->only(['name', 'description', 'price', 'status']);
+        unset($data['image']);
 
         if ($request->hasFile('image')) {
             if ($service->image) {
                 Storage::disk('public')->delete($service->image);
             }
-            $imagePath = $request->file('image')->store('services', 'public');
-            $dataToUpdate['image'] = $imagePath;
+            $data['image'] = $request->file('image')->store('services', 'public');
         }
 
-        $service->update($dataToUpdate);
+        $service->update($data);
 
         return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil diperbarui!');
     }
