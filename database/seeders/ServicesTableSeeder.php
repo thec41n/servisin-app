@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\Service;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ServicesTableSeeder extends Seeder
 {
@@ -13,8 +15,13 @@ class ServicesTableSeeder extends Seeder
      */
     public function run(): void
     {
+        foreach (File::files(database_path('seeders/images')) as $image) {
+            Storage::disk('public')->putFileAs('services', $image->getPathname(), $image->getFilename());
+        }
+
         Service::create([
             'name' => 'Ganti Baterai HP & Tablet',
+            'category' => 'smartphone',
             'description' => '<p>Smartphone atau tablet Anda boros baterai? Kembalikan daya tahan perangkat Anda seperti baru dengan penggantian baterai original dari kami.</p><h3>Apa yang Anda Dapatkan?</h3><ul><li>Baterai original sesuai tipe perangkat</li><li>Pemasangan cepat oleh teknisi ahli</li><li>Garansi baterai hingga 3 bulan</li><li>Pengecekan kesehatan baterai gratis</li></ul>',
             'price' => 250000,
             'image' => 'services/ganti-batre.jpg',
