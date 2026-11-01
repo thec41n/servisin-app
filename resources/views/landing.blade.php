@@ -173,19 +173,4 @@
             requestAnimationFrame(tick);
         });
     </script>
-
-    @if (session('order_success') && session('receipt_url'))
-        <script>
-            Swal.fire({
-                title: 'Pesanan Berhasil!',
-                html: @json(session('order_success')),
-                icon: 'success',
-                confirmButtonColor: '#8e1616',
-                confirmButtonText: 'Download E-Receipt',
-                preConfirm: () => {
-                    window.location.href = @json(session('receipt_url'));
-                }
-            });
-        </script>
-    @endif
 @endpush

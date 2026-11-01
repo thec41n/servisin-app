@@ -25,6 +25,7 @@ Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/services/{service}', [PageController::class, 'showService'])->name('services.show_public');
 Route::get('/order/{service}', [PublicOrderController::class, 'create'])->name('orders.create');
 Route::post('/order', [PublicOrderController::class, 'store'])->middleware('throttle:5,1')->name('orders.store');
+Route::get('/orders/{order:tracking_code}/success', [PublicOrderController::class, 'success'])->name('orders.success');
 Route::get('/orders/{order:tracking_code}/receipt', [PublicOrderController::class, 'receipt'])->name('orders.receipt');
 Route::get('/track', [PageController::class, 'trackOrder'])->middleware('throttle:30,1')->name('track.show');
 Route::post('/track/{order:tracking_code}/review', [ReviewController::class, 'store'])->middleware('throttle:5,1')->name('reviews.store');

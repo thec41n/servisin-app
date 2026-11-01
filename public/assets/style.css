@@ -708,6 +708,67 @@ main {
     font-size: 1.2rem;
 }
 
+.success-card {
+    padding: 2.5rem 1.5rem;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.success-card h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.success-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    margin-bottom: 1.25rem;
+    border-radius: 50%;
+    background-color: var(--maroon);
+    color: var(--warm-white);
+    font-size: 2rem;
+}
+
+.tracking-code-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+    padding: 1.25rem;
+    border: 2px dashed var(--beige-gold);
+    border-radius: 15px;
+    background-color: var(--warm-white);
+}
+
+.tracking-code-label {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.tracking-code {
+    font-size: 1.75rem;
+    letter-spacing: 0.08em;
+    color: var(--maroon);
+    overflow-wrap: anywhere;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--maroon);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
 .order-form h2 {
     font-size: 2rem;
     font-weight: 600;

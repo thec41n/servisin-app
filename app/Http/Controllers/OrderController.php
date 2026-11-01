@@ -45,10 +45,12 @@ class OrderController extends Controller
 
         $order = $service->orders()->create([...$data, 'price' => $service->price]);
 
-        return redirect()->route('home')->with([
-            'order_success' => 'Pesanan Anda telah diterima! <br><br>Kode pelacakan Anda adalah: <strong>'.$order->tracking_code.'</strong>',
-            'receipt_url' => route('orders.receipt', $order->tracking_code),
-        ]);
+        return redirect()->route('orders.success', $order->tracking_code);
+    }
+
+    public function success(Order $order)
+    {
+        return view('orders.success', ['order' => $order->load('service')]);
     }
 
     public function receipt(Order $order)

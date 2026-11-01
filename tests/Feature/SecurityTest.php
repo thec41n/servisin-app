@@ -67,7 +67,7 @@ class SecurityTest extends TestCase
     {
         $service = $this->service();
 
-        $this->post(route('orders.store'), [
+        $response = $this->post(route('orders.store'), [
             'service_id' => $service->id,
             'name' => 'Budi',
             'email' => 'budi@example.com',
@@ -76,9 +76,11 @@ class SecurityTest extends TestCase
             'price' => 1,
             'status' => 'selesai',
             'tracking_code' => 'SVS-HACK',
-        ])->assertRedirect(route('home'));
+        ]);
 
         $order = Order::sole();
+        $response->assertRedirect(route('orders.success', $order->tracking_code));
+        $this->get(route('orders.success', $order->tracking_code))->assertOk()->assertSee($order->tracking_code);
         $this->assertSame(250000, (int) $order->price);
         $this->assertSame('menunggu', $order->fresh()->status);
         $this->assertNotSame('SVS-HACK', $order->tracking_code);
