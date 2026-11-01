@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\OrderController as PublicOrderController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -30,19 +29,9 @@ Route::post('/track', [PageController::class, 'trackOrder'])->middleware('thrott
 Route::get('/services', [PageController::class, 'showAllServices'])->name('services.index_public');
 Route::get('/kontak-kami', [PageController::class, 'showContactPage'])->name('contact.show');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
 Route::middleware(['auth', 'can:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('services', ServiceController::class);
+    Route::resource('services', ServiceController::class)->except(['create', 'show']);
     Route::get('orders/export', [AdminOrderController::class, 'export'])->name('orders.export');
     Route::get('orders', [AdminOrderController::class, 'index'])->name('orders.index');
     Route::get('orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
