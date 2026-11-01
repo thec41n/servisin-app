@@ -12,8 +12,33 @@
                         Dari laptop yang rewel hingga smartphone yang pecah, tim ahli
                         kami siap membantu Anda kembali aktif dalam sekejap.
                     </p>
-                    <a href="{{ route('services.index_public') }}" class="btn btn-primary btn-lg">Lihat Semua Layanan</a>
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                        <a href="{{ route('services.index_public') }}" class="btn btn-primary btn-lg">Lihat Semua Layanan</a>
+                        <a href="{{ route('track.show') }}" class="btn btn-secondary btn-lg w-auto">Lacak Pesanan</a>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="steps-section">
+        <div class="container">
+            <h2 class="section-title text-center">Cara Kerja Servis Kami</h2>
+            <div class="row g-4">
+                @foreach ([
+                    ['fas fa-magnifying-glass', 'Pilih Layanan', 'Cari layanan yang sesuai dengan kendala perangkat Anda.'],
+                    ['fas fa-file-pen', 'Isi Formulir', 'Ceritakan kerusakannya, lalu simpan kode pelacakan yang Anda terima.'],
+                    ['fas fa-clipboard-check', 'Lacak Status', 'Pantau progres servis kapan saja dengan kode pelacakan tersebut.'],
+                ] as [$icon, $title, $text])
+                    <div class="col-md-4">
+                        <div class="step-card h-100">
+                            <span class="step-number">{{ $loop->iteration }}</span>
+                            <i class="{{ $icon }} step-icon" aria-hidden="true"></i>
+                            <h3>{{ $title }}</h3>
+                            <p class="mb-0">{{ $text }}</p>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -34,9 +59,13 @@
                         </div>
                     </div>
                 @endforelse
-
             </div>
 
+            @if ($services->isNotEmpty())
+                <div class="text-center mt-5">
+                    <a href="{{ route('services.index_public') }}" class="btn btn-primary">Lihat Semua Layanan</a>
+                </div>
+            @endif
         </div>
     </section>
 @endsection

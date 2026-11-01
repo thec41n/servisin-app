@@ -178,6 +178,53 @@ main {
     margin-bottom: 2rem;
 }
 
+.steps-section {
+    padding: 4rem 0 5rem;
+}
+
+.steps-section .section-title {
+    color: var(--black);
+}
+
+.step-card {
+    position: relative;
+    padding: 2rem 1.5rem;
+    border-top: 4px solid var(--maroon);
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.step-number {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: var(--beige-gold);
+    font-weight: 700;
+}
+
+.step-icon {
+    margin-bottom: 1rem;
+    font-size: 2.25rem;
+    color: var(--maroon);
+}
+
+.step-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.step-card p {
+    color: #555;
+}
+
 /* Services Section */
 .services-section {
     padding: 5rem 0;
@@ -288,6 +335,10 @@ main {
 }
 
 @media (max-width: 768px) {
+    .hero {
+        padding: 4rem 0;
+    }
+
     .hero h1 {
         font-size: 2.5rem;
     }

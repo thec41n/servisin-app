@@ -12,7 +12,12 @@ class PageController extends Controller
 {
     public function home()
     {
-        $services = Service::where('status', true)->latest()->take(3)->get();
+        $services = Service::where('status', true)
+            ->withCount('orders')
+            ->orderByDesc('orders_count')
+            ->latest()
+            ->take(3)
+            ->get();
 
         return view('landing', compact('services'));
     }

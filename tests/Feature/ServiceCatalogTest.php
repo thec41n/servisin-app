@@ -34,6 +34,21 @@ class ServiceCatalogTest extends TestCase
             ->assertDontSee('Install Ulang OS');
     }
 
+    public function test_home_lists_most_ordered_services_first(): void
+    {
+        $this->service('Install Ulang OS', 'laptop');
+        $popular = $this->service('Ganti Baterai HP', 'smartphone');
+        $popular->orders()->create([
+            'price' => $popular->price,
+            'name' => 'Budi',
+            'email' => 'budi@example.com',
+            'phone_number' => '081234567890',
+            'item_detail' => 'Baterai drop',
+        ]);
+
+        $this->get(route('home'))->assertSeeInOrder(['Ganti Baterai HP', 'Install Ulang OS']);
+    }
+
     public function test_unknown_category_is_rejected(): void
     {
         $this->get(route('services.index_public', ['category' => 'kulkas']))
