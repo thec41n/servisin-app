@@ -30,6 +30,11 @@
             </a>
         </li>
         <li>
+            <a href="{{ route('admin.reviews.index') }}" @class(['active' => request()->routeIs('admin.reviews.*')])>
+                <i class="fas fa-star icon"></i> Ulasan Pelanggan
+            </a>
+        </li>
+        <li>
             <a href="{{ route('admin.settings.edit') }}" @class(['active' => request()->routeIs('admin.settings.*')])>
                 <i class="fas fa-cog icon"></i>Pengaturan Website
             </a>

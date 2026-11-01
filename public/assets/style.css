@@ -182,8 +182,131 @@ main {
     padding: 4rem 0 5rem;
 }
 
-.steps-section .section-title {
+.steps-section .section-title,
+.reviews-section .section-title {
     color: var(--black);
+}
+
+.reviews-section {
+    padding: 5rem 0;
+}
+
+.review-carousel {
+    overflow: hidden;
+}
+
+.review-track {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0.5rem 0 1rem;
+    touch-action: pan-y;
+    user-select: none;
+    cursor: grab;
+    will-change: transform;
+}
+
+.review-track.is-dragging {
+    cursor: grabbing;
+}
+
+.review-carousel.is-static .review-track {
+    justify-content: center;
+    cursor: auto;
+}
+
+.review-slide {
+    flex: 0 0 85%;
+}
+
+@media (min-width: 768px) {
+    .review-slide {
+        flex-basis: calc((100% - 1.5rem) / 2);
+    }
+}
+
+@media (min-width: 992px) {
+    .review-slide {
+        flex-basis: calc((100% - 3rem) / 3);
+    }
+}
+
+.review-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.75rem;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.review-comment {
+    flex-grow: 1;
+    margin: 0;
+    font-style: italic;
+    color: #333;
+}
+
+.review-author {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.95rem;
+}
+
+.review-author span {
+    font-size: 0.85rem;
+    color: var(--maroon);
+}
+
+.rating {
+    color: var(--maroon);
+    white-space: nowrap;
+}
+
+.rating-summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--black);
+    text-decoration: none;
+}
+
+.rating-summary:hover span {
+    text-decoration: underline;
+}
+
+.rating-input {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    gap: 0.25rem;
+}
+
+.rating-input input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.rating-input label {
+    font-size: 2rem;
+    /* Darker beige-gold keeps unselected stars at 3:1 contrast on white. */
+    color: #a8844a;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.rating-input input:checked ~ label,
+.rating-input label:hover,
+.rating-input label:hover ~ label {
+    color: var(--maroon);
+}
+
+.rating-input input:focus-visible + label {
+    outline: 3px solid rgba(142, 22, 22, 0.35);
+    outline-offset: 2px;
+    border-radius: 4px;
 }
 
 .step-card {

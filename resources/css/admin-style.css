@@ -294,6 +294,11 @@ a {
     background-color: #dc3545;
 }
 
+.rating {
+    color: var(--maroon);
+    white-space: nowrap;
+}
+
 .action-buttons .btn-detail {
     background-color: #6c757d;
     color: #fff;

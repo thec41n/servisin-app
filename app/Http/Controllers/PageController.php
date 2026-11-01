@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Review;
 use App\Models\Service;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -19,7 +20,9 @@ class PageController extends Controller
             ->take(3)
             ->get();
 
-        return view('landing', compact('services'));
+        $reviews = Review::published()->with('order.service')->latest()->take(9)->get();
+
+        return view('landing', compact('services', 'reviews'));
     }
 
     public function showService(Service $service)
@@ -28,31 +31,20 @@ class PageController extends Controller
             abort(404, 'Layanan tidak ditemukan atau tidak aktif.');
         }
 
-        return view('services.show', compact('service'));
-    }
+        $averageRating = $service->reviews()->published()->avg('rating');
+        $reviewsCount = $service->reviews()->published()->count();
+        $reviews = $service->reviews()->published()->with('order')->latest('reviews.created_at')->take(5)->get();
 
-    public function showTrackPage()
-    {
-        return view('track.index');
+        return view('services.show', compact('service', 'reviews', 'averageRating', 'reviewsCount'));
     }
 
     public function trackOrder(Request $request)
     {
-        $messages = [
-            'tracking_code.required' => 'Mohon masukkan kode pelacakan Anda.',
-        ];
+        $code = $request->validate(['code' => 'nullable|string|max:50'])['code'] ?? null;
 
-        $request->validate([
-            'tracking_code' => 'required|string',
-        ], $messages);
+        $order = $code ? Order::with('review')->where('tracking_code', $code)->first() : null;
 
-        $order = Order::where('tracking_code', $request->tracking_code)->first();
-
-        if ($order) {
-            return view('track.index', compact('order'));
-        } else {
-            return redirect()->route('track.show')->with('error', 'Kode pelacakan tidak ditemukan atau tidak valid.');
-        }
+        return view('track.index', compact('order', 'code'));
     }
 
     public function showAllServices(Request $request)

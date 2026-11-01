@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 
 class Order extends Model
 {
     use HasFactory;
+
+    public const COMPLETED_STATUSES = ['selesai', 'dikirim'];
 
     protected $fillable = [
         'service_id',
@@ -32,5 +35,15 @@ class Order extends Model
     public function service(): BelongsTo
     {
         return $this->belongsTo(Service::class);
+    }
+
+    public function review(): HasOne
+    {
+        return $this->hasOne(Review::class);
+    }
+
+    public function isCompleted(): bool
+    {
+        return in_array($this->status, self::COMPLETED_STATUSES, true);
     }
 }

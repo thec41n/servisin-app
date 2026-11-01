@@ -18,6 +18,12 @@
                 <div class="col-lg-6">
                     <div class="detail-info">
                         <h1>{{ $service->name }}</h1>
+                        @if ($reviewsCount)
+                            <a href="#ulasan" class="rating-summary">
+                                <x-rating :value="$averageRating" />
+                                <span>{{ number_format($averageRating, 1, ',', '.') }} ({{ $reviewsCount }} ulasan)</span>
+                            </a>
+                        @endif
                         <div class="price">Mulai dari Rp {{ number_format($service->price, 0, ',', '.') }}</div>
 
                         <div class="full-description">
@@ -35,4 +41,19 @@
             </div>
         </div>
     </section>
+
+    @if ($reviews->isNotEmpty())
+        <section class="reviews-section pt-0" id="ulasan">
+            <div class="container">
+                <h2 class="section-title">Ulasan Pelanggan</h2>
+                <div class="row g-4">
+                    @foreach ($reviews as $review)
+                        <div class="col-md-6 col-lg-4">
+                            <x-review-card :review="$review" :show-service="false" />
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
 @endsection
