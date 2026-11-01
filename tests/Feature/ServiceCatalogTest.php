@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Service;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -47,6 +48,17 @@ class ServiceCatalogTest extends TestCase
         ]);
 
         $this->get(route('home'))->assertSeeInOrder(['Ganti Baterai HP', 'Install Ulang OS']);
+    }
+
+    public function test_service_detail_shows_breadcrumb_and_whatsapp_link(): void
+    {
+        Setting::create(['phone_number' => '081234567890']);
+        $service = $this->service('Install Ulang OS', 'laptop');
+
+        $this->get(route('services.show_public', $service))
+            ->assertOk()
+            ->assertSee('Laptop &amp; PC', false)
+            ->assertSee('https://wa.me/6281234567890?text=', false);
     }
 
     public function test_unknown_category_is_rejected(): void

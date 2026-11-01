@@ -3,15 +3,29 @@
 @section('title', $service->name)
 
 @section('content')
-    <section class="detail-section py-5">
+    <section class="detail-section py-4 py-lg-5">
         <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('services.index_public') }}">Layanan</a></li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('services.index_public', ['category' => $service->category]) }}">
+                            {{ \App\Models\Service::CATEGORIES[$service->category] ?? 'Lainnya' }}
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ $service->name }}</li>
+                </ol>
+            </nav>
+
             <div class="row g-4 g-lg-5">
                 <div class="col-lg-6">
-                    <div class="detail-gallery">
-                        <div class="main-image-bs mb-3">
-                            <img src="{{ $service->image_url }}" alt="{{ $service->name }}" class="img-fluid w-100 h-100"
-                                style="object-fit: cover; border-radius: 15px;">
-                        </div>
+                    <div class="main-image-bs">
+                        @if ($service->image_url)
+                            <img src="{{ $service->image_url }}" alt="{{ $service->name }}">
+                        @else
+                            <i class="fas fa-tools fa-3x" aria-hidden="true"></i>
+                        @endif
                     </div>
                 </div>
 
@@ -31,10 +45,16 @@
                             {!! $service->description !!}
                         </div>
 
-                        <div class="d-grid mt-4">
-                            <a href="{{ route('orders.create', $service->id) }}" class="btn btn-primary btn-lg">
+                        <div class="d-grid d-sm-flex gap-2 mt-4">
+                            <a href="{{ route('orders.create', $service) }}" class="btn btn-primary btn-lg flex-sm-fill">
                                 Pesan Layanan Sekarang
                             </a>
+                            @if ($whatsappUrl = whatsapp_url($appSetting->phone_number, "Halo, saya ingin bertanya tentang layanan {$service->name}."))
+                                <a href="{{ $whatsappUrl }}" class="btn btn-secondary btn-lg flex-sm-fill w-auto"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-whatsapp me-2" aria-hidden="true"></i>Tanya via WhatsApp
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
